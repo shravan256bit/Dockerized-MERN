@@ -4,7 +4,7 @@
 ## 📖 Description
 
 This project is a simple **Employee Todo MERN application** built with React, Node.js/Express, and MongoDB.  
-It is primarily designed as a learning project to practice **DevOps-related workflows** such as containerization with Docker, environment variable management, networking between services, and deployment on AWS EC2.  
+It is primarily designed as a learning project to practice **DevOps-related workflows**
 The focus is not on application complexity, but on using a real-world stack to explore DevOps best practices.
 ```
 
@@ -127,4 +127,9 @@ npm start
   docker rm -f mongodb
   docker volume rm mongo_data
   ```
+  ---
+
+## ✍️ Author
+Happy learning!  
+**Author:** Shravan M S
 ```
