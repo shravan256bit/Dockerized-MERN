@@ -1,4 +1,4 @@
-Here’s a nicely formatted **README.md** draft for your Employee Todo MERN application. It organizes everything clearly so anyone can follow along:
+Here’s your **README.md** updated to include Docker volume usage for MongoDB persistence. I’ve kept the structure clean and added the relevant commands for both Compose and non‑Compose workflows:
 
 ```markdown
 # Employee Todo MERN Application
@@ -23,7 +23,8 @@ A simple **Employee Todo** application built with the MERN stack:
 Run MongoDB container (same for local and EC2):
 
 ```bash
-docker run -d --name mongodb --network mern-network mongo:6.0
+docker volume create mongo_data
+docker run -d --name mongodb --network mern-network -p 27017:27017 -v mongo_data:/data/db mongo:6.0
 ```
 
 Create Docker network:
@@ -67,8 +68,19 @@ docker run -d \
   --name backend \
   --network mern-network \
   -p 5000:5000 \
-  -e MONGO_URL=mongodb://<EC2-PUBLIC-IP>:27017/employee_todo \
+  -e MONGO_URL=mongodb://mongodb:27017/employee_todo \
   employee-backend
+```
+
+### MongoDB (with volume)
+```bash
+docker volume create mongo_data
+docker run -d \
+  --name mongodb \
+  --network mern-network \
+  -p 27017:27017 \
+  -v mongo_data:/data/db \
+  mongo:6.0
 ```
 
 ---
@@ -101,77 +113,10 @@ npm start
 ## 📖 Notes
 - Use `mern-network` for container communication.
 - Replace `<EC2-PUBLIC-IP>` with your actual EC2 instance public IP.
-- For persistence, consider adding Docker volumes for MongoDB.
+- MongoDB data is persisted in the `mongo_data` Docker volume.
+- To reset the database completely:
+  ```bash
+  docker rm -f mongodb
+  docker volume rm mongo_data
+  ```
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-This is a simple Employee Todo MERN application.
-Frontend: React
-Backend: Node.js + Express
-Database: MongoDB
-Configuration handled using environment variables
-Runs on:
-Local system (default)
-AWS EC2 (with .env setup)
-
-prequsite:docker
-
-run this data base ,same for local and ec2
-docker run -d --name mongodb --network mern-network mongo:6.0
-
-
-create docker network
-docker network create mern-network
-
-
-When run on ec2 add ip on uncomment .env details and add ec2 ip on both frontend and backend
-run docker compose up -d
-
-
-without compose
-
-
-cd employee-todo-frontend
-docker build -t employee-frontend .
-docker run -d --name frontend --network mern-network -p 3000:3000 -e REACT_APP_API_URL=http://<EC2-PUBLIC-IP>:5000/api/todos employee-frontend
-
-cd employee-todo-backend
-docker build -t employee-backend .
-docker run -d --name backend --network mern-network -p 5000:5000 -e MONGO_URL=mongodb://<EC2-PUBLIC-IP>:27017/employee_todo employee-backend
-
-
-Backend – Local
-cd employee-todo-backend
-npm install
-npm run dev
-
-Frontend – Local
-cd employee-todo-frontend
-npm install
-npm start
-
-
