@@ -76,7 +76,7 @@ docker run -d \
   --name backend \
   --network mern-network \
   -p 5000:5000 \
-  -e MONGO_URL=mongodb://mongodb:27017/employee_todo \
+  -e MONGO_URL=mongodb://<EC2-PUBLIC-IP>:27017/employee_todo \
   employee-backend
 ```
 
