@@ -1,4 +1,12 @@
-Here’s your **README.md** updated to include Docker volume usage for MongoDB persistence. I’ve kept the structure clean and added the relevant commands for both Compose and non‑Compose workflows:
+
+
+```markdown
+## 📖 Description
+
+This project is a simple **Employee Todo MERN application** built with React, Node.js/Express, and MongoDB.  
+It is primarily designed as a learning project to practice **DevOps-related workflows** such as containerization with Docker, environment variable management, networking between services, and deployment on AWS EC2.  
+The focus is not on application complexity, but on using a real-world stack to explore DevOps best practices.
+```
 
 ```markdown
 # Employee Todo MERN Application
