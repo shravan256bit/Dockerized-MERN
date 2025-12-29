@@ -1,25 +1,43 @@
 version: "3.8"
 
 services:
+  frontend:
+    image: employee-frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: "http://<ec2-ip>:5000/api/todos"
+    networks:
+      - mern-network
+    depends_on:
+      - backend
+  backend:
+    image: employee-backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URL: "mongodb://<ec2-ip>:27017/employee_todo"
+    networks:
+      - mern-network
+    depends_on:
+      - mongodb
+
   mongodb:
     image: mongo:6.0
     container_name: mongodb
     ports:
       - "27017:27017"
+    networks:
+      - mern-network
+    volumes:
+      - mongo_data:/data/db  
 
-  backend:
-    build: ./employee-todo-backend
-    container_name: backend
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mongodb
+networks:
+  mern-network:
+    driver: bridge
 
-  frontend:
-    build: ./employee-todo-frontend
-    container_name: frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
+volumes:
+  mongo_data:
+    driver: local
